@@ -1,0 +1,79 @@
+maven dependency scope
+jar 추가
+
+jar scope??
+
+provide
+test
+compile(default)
+
+
+
+maven cycle
+자바 클래스 : 개발자가 작성
+--> lib 필요로 함(import)
+--> maven 의 의존성 관리(pom.xml dependencies)
+
+as-is(지금까지) 개발환경
+이클립스에서 알아서 컴파일, 서버 배포
+
+
+to-be(리눅스 서버 >> 이클립스 사용 x)
+주어진 것 소스, maven, tomcat
+ --> compile, 테스트(옵션), 
+ 	완성된 빌드 결과를 topcat webapps 로 복사
+ 	
+ 	이런 작업들을 위해서 maven 빌드 도구를 사용
+ 	compile - test - build(배포되는 최종형태) war --> 웹 어플리케이션 폴더 형태
+ 	<web.xml 의 위치, class 위치, lib 위치
+ 	WEB-INF/web.xml, WEB-INF/classes, WEB-INF.lib)
+ 	
+ 	톰캣서버에서 웹 어플리케이셔니 참고 가능한 lib
+ 	
+1. tomcat//inf'
+2. 자기자신 WEB-INFlib 폴더에 속한 jar
+
+
+maven cycle
+compile(컴파일시 필요로 하는 모든 jar 필요) - 
+
+test(junit 테스트 코드를 실행하는 단계)
++ 테스트에 필요한 lib 가 필요(junit)
+
+ - build(컴파일된 결과물을 servlet 스펙에 맞게 war 파일 생성)
+ 
+ test 실행할 때 사용한 lib ?
+  --? 운영시 junit lib 가 필요한가? 필요없음 ㅇㅇ
+  
+pom.xml 에서 dependency scope 설정을 통해
+lib 범위(배포)를 결정
+
+scope >> provided : 컴파일시에는 필요하난 운영환경에서는 제공되는 경우
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
