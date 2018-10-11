@@ -1,6 +1,7 @@
 package kr.or.ddit.user.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.user.model.PageVo;
 import kr.or.ddit.user.model.UserVo;
@@ -14,5 +15,7 @@ public interface UserServiceInf {
 	
 	public UserVo selectUser(UserVo userVo);
 	
-	public List<UserVo> selectUserPageList(PageVo pageVo);
+	public Map<String, Object> selectUserPageList(PageVo pageVo);
+	
+	public int getUserCnt();
 }

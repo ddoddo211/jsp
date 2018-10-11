@@ -5,21 +5,29 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import kr.or.ddit.user.dao.UserDao;
+import kr.or.ddit.user.dao.UserDaoInf;
 import kr.or.ddit.user.model.UserVo;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class UserDaoTest {
+	
+	private UserDaoInf ud;
+	
+	@Before
+	public void setup(){
+		ud = new UserDao();
+	}
 
 	@Test
 	public void selectUserAllTest() {
-		UserDao ud = new UserDao();
 		List<UserVo> userVoList = ud.selectUserAll();
 		for(UserVo uv : userVoList){
 			System.out.println(uv.toString());
 		}
 		
-		assertEquals(5, userVoList.size());
+		assertEquals(105, userVoList.size());
 		
 
 		
@@ -37,7 +45,6 @@ public class UserDaoTest {
 	@Test
 	public void selectUserTest(){
 		/***Given***/
-		UserDao ud = new UserDao();
 		
 		/***When***/
 		UserVo brown = ud.selectUser("brown");
@@ -60,7 +67,6 @@ public class UserDaoTest {
 	@Test
 	public void selectUserByVoTest(){
 		/***Given***/
-		UserDao ud = new UserDao();
 		UserVo TestVo = new UserVo();
 		TestVo.setUserId("brown");
 		/***When***/
@@ -81,4 +87,16 @@ public class UserDaoTest {
 	// 제목, 내용 --> board
 	// 첨부파일 ==> boardFile  두번에 걸쳐 불러와야한다
 
+	@Test
+	public void getUserCntTest(){
+		/***Given***/
+
+		/***When***/
+		int totalCnt = ud.getUserCnt();
+
+		/***Then***/
+		assertEquals(105,totalCnt);
+
+	}
+	
 }

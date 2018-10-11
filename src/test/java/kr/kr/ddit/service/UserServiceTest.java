@@ -59,7 +59,7 @@ public class UserServiceTest {
 		}
 
 		/***Then***/
-		assertEquals(5, userList.size());
+		assertEquals(105, userList.size());
 
 		
 		
