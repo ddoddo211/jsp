@@ -97,7 +97,7 @@
 			</table>
 		</div>
 
-		<a class="btn btn-default pull-right">사용자 등록</a>
+		<a class="btn btn-default pull-right" href="/userForm">사용자 등록</a>
 		
 		<%
 		int totalCnt = (Integer)request.getAttribute("totalCnt");

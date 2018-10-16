@@ -18,4 +18,30 @@ public interface UserServiceInf {
 	public Map<String, Object> selectUserPageList(PageVo pageVo);
 	
 	public int getUserCnt();
+	
+	/**
+	 * 
+	 * Method : insertUser
+	 * 작성자 : bms
+	 * 변경이력 :
+	 * @param userVo
+	 * @return
+	 * Method 설명 : 사용자 등록
+	 */
+	public int insertUser(UserVo userVo);
+	
+	
+	/**
+	 * 
+	 * Method : deleteUser
+	 * 작성자 : bms
+	 * 변경이력 :
+	 * @param userId
+	 * @return
+	 * Method 설명 : 사용자 삭제
+	 */
+	int deleteUser(String userId);
+
+	public int userUpdate(UserVo userVo);
+	
 }

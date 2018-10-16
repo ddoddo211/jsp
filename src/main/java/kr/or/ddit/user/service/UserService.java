@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import kr.or.ddit.user.dao.Builder;
 import kr.or.ddit.user.dao.UserDao;
 import kr.or.ddit.user.model.PageVo;
 import kr.or.ddit.user.model.UserVo;
@@ -72,6 +76,32 @@ public class UserService implements UserServiceInf {
 	public int getUserCnt() {
 		// TODO Auto-generated method stub
 		return ud.getUserCnt();
+	}
+	
+	/**
+	 * 
+	 * Method : insertUser
+	 * 작성자 : bms
+	 * 변경이력 :
+	 * @param userVo
+	 * @return
+	 * Method 설명 : 사용자 등록
+	 */
+	@Override
+	public int insertUser(UserVo userVo) {
+		return ud.insertUser(userVo);
+	}
+
+	@Override
+	public int deleteUser(String userId) {
+		// TODO Auto-generated method stub
+		return ud.deleteUser(userId);
+	}
+
+	@Override
+	public int userUpdate(UserVo userVo) {
+		// TODO Auto-generated method stub
+		return ud.userUpdate(userVo);
 	}
 
 }

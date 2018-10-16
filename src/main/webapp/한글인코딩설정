@@ -1,0 +1,4 @@
+post 방식 한글인코딩
+request.setCharacterEncoding("utf-8");
+
+get 방식 server.xml 파일에서 인코딩 설정

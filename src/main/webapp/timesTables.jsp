@@ -1,23 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	tr:nth-child(2n) {
+		background: skyblue;
+	}
+	
+	tr:nth-of-type(odd) {
+		background: green;
+	} 
+	
+	table {
+		border-spacing: 10px
+	}
+	
+	td {
+		padding: 20px;
+		
+	}
+
+
+</style>
 </head>
 <body>
 
-<table border="1">
-	<%for(int gob = 1; gob <10; gob++){ %>
-	<tr>
-		<%for(int dan = 2; dan <10; dan++){ %>
-		<td><%=dan+" * "+gob+" = "+dan*gob %></td>
-		<%} %>
-	</tr>
-	<%
+<table>
+	<c:forEach begin="1" end="9" var="gob">
+			<tr>
+			<c:forEach begin="2" end="9" var="dan">
+				<td>${dan}*${gob}=${gob*dan}</td>
 		
-	} %>
+			</c:forEach>
+			</tr>
+	</c:forEach>	
 
 </table>
 

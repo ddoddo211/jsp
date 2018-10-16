@@ -2,6 +2,8 @@ package kr.kr.ddit.db;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import kr.or.ddit.user.dao.UserDao;
@@ -98,5 +100,48 @@ public class UserDaoTest {
 		assertEquals(105,totalCnt);
 
 	}
+	
+	@Test
+	public void insertUserTest(){
+		/***Given***/
+		//UserVo 준비
+		UserVo userVo = new UserVo();
+		userVo.setUserId("testId");
+		userVo.setName("TestNm");
+		userVo.setPass("pass1234");
+		userVo.setAddr1("큰주소");
+		userVo.setAddr2("작은주소");
+		userVo.setZipcd("12345");
+		GregorianCalendar gc = new GregorianCalendar(2018,7,8);
+		userVo.setBirth(new Date(gc.getTimeInMillis()));
+		userVo.setEmail("이메일@이메일");
+		userVo.setTel("전화번호");
+		
+		
+
+		/***When***/
+		//userDao.insert.User()
+		int cnt = ud.insertUser(userVo);
+		
+
+		/***Then***/
+		//입력건수
+		assertEquals(1, cnt);
+
+	}
+	
+	@Test
+	public void deleteUserTest(){
+		/***Given***/
+		String userId = "testId";
+
+		/***When***/
+		int cnt = ud.deleteUser(userId);
+
+		/***Then***/
+		assertEquals(1,cnt);
+
+	}
+	
 	
 }
