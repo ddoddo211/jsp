@@ -77,23 +77,17 @@
 						<th>이름		</th>
 						<th>생일		</th>
 				</tr>
-				<% 	
-					List<UserVo> userListP = (List<UserVo>)request.getAttribute("userListP");
-					for(UserVo uv : userListP){
-						Date birth = uv.getBirth();
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-						String fmBirth = sdf.format(birth);
-					%>
-					<tr class="userClick">
-						<td><%=uv.getRnum() %></td>
-						<td><a href="/userDetail?userId=<%=uv.getUserId() %>"><%=uv.getUserId()%></a></td>
-						<td><%=uv.getName() %></td>
-						<td><%=fmBirth %></td>
+				
+					
+					<c:forEach items="${userListP }" var="ul" varStatus="status">
+						<tr class="userClick">
+							<td>${status.index+1}</td>
+							<td><a href="/userDetail?userId=${ul.userId}">${ul.userId}</a></td>
+							<td>${ul.name }</td>
+						<td><fmt:formatDate value="${ul.birth}" pattern="yyyy-MM-dd" /></td>
 					</tr>	
-						
-						<%
-					}
-					%>
+					</c:forEach>
+					
 			</table>
 		</div>
 
@@ -136,6 +130,8 @@
 				}
 			}
 			%>
+			
+			
 			<li><a href="/userPageList?pageNum=<%=endIndex%>">></a></li>
 			</ul>
 		</div>

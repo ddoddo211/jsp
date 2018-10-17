@@ -31,10 +31,21 @@
 %>
 
 
+
+
+</head>
+
+<body>
+
+
+	<%-- 지시자 --%>
+	<%@ include file="/common/header.jsp" %>
+
 <script>
 
 $(document).ready(function(){
 	//개발과정에서 설정한 기본값 설정
+	<%--
 	$("#userId").val("<%=userVo.getUserId()%>");
 	$("#pass").val();
 	$("#passChk").val();
@@ -45,6 +56,7 @@ $(document).ready(function(){
    	$("#birth").val("<%=userVo.getBirth()%>");
    	$("#email").val("<%=userVo.getEmail()%>");
    	$("#tel").val("<%=userVo.getTel()%>");
+   	--%>
 	$("#userId").attr("readonly",true);
    	
    	$("#chkOk").hide();
@@ -100,16 +112,6 @@ $(document).ready(function(){
 }); // document.ready 종료
 
 </script>
-
-
-</head>
-
-<body>
-
-
-	<%-- 지시자 --%>
-	<%@ include file="/common/header.jsp" %>
-
 	<div class="container-fluid">
 		<div class="row">
 
@@ -123,7 +125,14 @@ $(document).ready(function(){
                <div class="form-group">
                   <label for="userNm" class="col-sm-2 control-label">사용자 사진</label>
                   <div class="col-sm-10">
-                  		<img src=""/>
+                  		<c:choose>
+                  		<c:when test="${userVo.profile!=null}">
+                  			<img src="${userVo.profile}"/>
+                  		</c:when>
+                  		<c:otherwise>
+                  			<img src="/profile/noimage.jpg"/>
+                  		</c:otherwise>
+                  	</c:choose>
                   		<input type="file" name="profile" >
                   </div>
                </div>
@@ -131,7 +140,7 @@ $(document).ready(function(){
                   <label for="userNm" class="col-sm-2 control-label">사용자 아이디</label>
                   <div class="col-sm-10">
                   	<input type="text" class="form-control" id="userId" name="userId"
-                  		placeholder="사용자 아이디">
+                  		placeholder="사용자 아이디" value="${userVo.userId }">
                   </div>
                </div>
                
@@ -139,7 +148,7 @@ $(document).ready(function(){
                   <label for="userNm" class="col-sm-2 control-label">비밀번호</label>
                   <div class="col-sm-10">
                   	<input type="password" class="form-control" id="pass" name="pass"
-                  		placeholder="비밀번호">
+                  		placeholder="비밀번호" value="${userVo.pass }">
                   </div>
                </div>
                
@@ -156,7 +165,7 @@ $(document).ready(function(){
                   <label for="userNm" class="col-sm-2 control-label">이름</label>
                   <div class="col-sm-10">
                  	 <input type="text" class="form-control" id="name" name="name"
-                  		placeholder="이름">
+                  		placeholder="이름" value="${userVo.name }">
                   </div>
                </div>
 
@@ -164,7 +173,7 @@ $(document).ready(function(){
                   <label for="userNm" class="col-sm-2 control-label">주소</label>
                   <div class="col-sm-10">
                  	 <input type="text" class="form-control" id="addr1" name="addr1"
-                  		placeholder="주소">
+                  		placeholder="주소" value="${userVo.addr1 }">
 					<button type="button" id="addrSearchBtn" class="btn btn-default">주소검색</button> 
                   </div>
                </div>
@@ -172,14 +181,14 @@ $(document).ready(function(){
                   <label for="userNm" class="col-sm-2 control-label">상세주소를 입력해주세요</label>
                   <div class="col-sm-10">
                  	 <input type="text" class="form-control" id="addr2" name="addr2"
-                  		placeholder="상세주소">
+                  		placeholder="상세주소" value="${userVo.addr2 }">
                   </div>
                </div>
                <div class="form-group">
                   <label for="pass" class="col-sm-2 control-label">우편번호</label>
                   <div class="col-sm-10">
                   	<input type="text" class="form-control" id="zipcd" name="zipcd"
-                  		placeholder="우편번호">
+                  		placeholder="우편번호" value="${userVo.zipcd }">
                   </div>
                </div>
                
@@ -187,7 +196,7 @@ $(document).ready(function(){
                   <label for="pass" class="col-sm-2 control-label">생년월일</label>
                   <div class="col-sm-10">
                   	<input type="text" class="form-control" id="birth" name="birth"
-                  		placeholder="생년월일">
+                  		placeholder="생년월일" value="<fmt:formatDate value="${userVo.birth}" pattern="yyyy-MM-dd" />">
                   </div>
                </div>
                
@@ -195,7 +204,7 @@ $(document).ready(function(){
                   <label for="pass" class="col-sm-2 control-label">이메일</label>
                   <div class="col-sm-10">
                   	<input type="text" class="form-control" id="email" name="email"
-                  		placeholder="이메일">
+                  		placeholder="이메일" ${userVo.email}>
                   </div>
                </div>
                
@@ -203,7 +212,7 @@ $(document).ready(function(){
                   <label for="pass" class="col-sm-2 control-label">연락처</label>
                   <div class="col-sm-10">
                   	<input type="text" class="form-control" id="tel" name="tel"
-                  		placeholder="전화번호">
+                  		placeholder="전화번호" ${userVo.tel}>
                   </div>
                </div>
                

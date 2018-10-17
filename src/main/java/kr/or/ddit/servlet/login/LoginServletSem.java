@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +38,37 @@ public class LoginServletSem extends HttpServlet{
 		
 		String userId= req.getParameter("userId");
 		String password = req.getParameter("password");
+		String rememberMe = req.getParameter("remember-me");
+
+		//아이디 기억
+		if(rememberMe == null){
+//			Cookie cookie = new Cookie("remember", "N");
+//			Cookie useridCookie = new Cookie("userId", userId);
+//			cookie.setMaxAge(60*60*24);
+//			cookie.setMaxAge(-1); //음수로 하면 쿠키가 유효화 되며 사라짐
+//			resp.addCookie(cookie);
+//			resp.addCookie(useridCookie);
+			
+			Cookie[] cookies = req.getCookies();
+			for(Cookie cookie : cookies){
+				if(cookie.getName().equals("userId")){
+					cookie.setMaxAge(0); // 0 : 바로삭제, -1 : 브라우저 재시작시 쿠키삭제 반영
+					resp.addCookie(cookie);
+				} else if(cookie.getName().equals("remember")){
+					cookie.setMaxAge(0);
+					resp.addCookie(cookie);
+				}
+				System.out.println(cookie.getName());
+			}
+		} else {
+			//response 객체에 저장
+			Cookie cookie = new Cookie("remember", "Y");
+			Cookie useridCookie = new Cookie("userId", userId);
+			resp.addCookie(cookie);
+			resp.addCookie(useridCookie);
+		}
+		
+		
 		System.out.println(userId);
 		UserVo userVo = us.selectUser(userId);
 		if(userVo!=null && password.equals(userVo.getPass())){
@@ -53,7 +85,7 @@ public class LoginServletSem extends HttpServlet{
 //			userVoTemp.setBirth(new Date());
 			HttpSession session = req.getSession();
 //			session.setAttribute("session", userVo.getName()+"["+userVo.getAlias()+"] 님 안녕하세요");
-			session.setAttribute("session", userVo.getName()+"["+userVo.getUserId()+"] 님 안녕하세요");
+			session.setAttribute("session", "\t"+userVo.getName()+"["+userVo.getUserId()+"] 님 안녕하세요");
 			
 			//2. main.jsp
 			//body 영역에

@@ -6,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,24 +47,17 @@
 						<th>이름		</th>
 						<th>생일		</th>
 				</tr>
-				<% 	
-					List<UserVo> userListP = (List<UserVo>)request.getAttribute("userListP");
-					for(UserVo uv : userListP){
-						Date birth = uv.getBirth();
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-						String fmBirth = sdf.format(birth);
-					%>
+			
+				<c:forEach items="${userList }" var="vo" varStatus="status">
 					<tr>
-						<td><%=uv.getRnum() %></td>
-						<td><%=uv.getUserId() %></td>
-						<td><%=uv.getName() %></td>
-						<td><%=fmBirth %></td>
+						<td>${status.index+1}</td>
+						<td>${vo.userId}</td>
+						<td>${vo.name}</td>
+						<td><fmt:formatDate value="${vo.birth}" pattern="yyyy-MM-dd" /></td>
 					</tr>	
-						
-						<%
 					
-					}
-					%>
+				</c:forEach>
+				
 				
 			</table>
 		</div>
