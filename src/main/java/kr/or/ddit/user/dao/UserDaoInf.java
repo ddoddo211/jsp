@@ -3,6 +3,7 @@ package kr.or.ddit.user.dao;
 import java.util.List;
 
 import kr.or.ddit.user.model.PageVo;
+import kr.or.ddit.user.model.ProdVo;
 import kr.or.ddit.user.model.UserVo;
 
 public interface UserDaoInf {
@@ -40,4 +41,8 @@ public interface UserDaoInf {
 	int deleteUser(String userId);
 	
 	int userUpdate(UserVo userVo);
+	
+	public List<ProdVo> selectProdList(PageVo pageVo);
+	
+	public int cntProdList();
 }

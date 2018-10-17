@@ -53,6 +53,38 @@
   	where userId=#{userId}	
   </update>
   
+  <select id="selectProdList" parameterType="pageVo" resultType="prodVo">
+  	select * from
+	  	(select rownum rnum,a.* from
+		  	(select
+		   		 prod_id
+		   		 ,prod_name
+		    	 ,lprod_nm
+		    	 ,prod_insdate
+			from prod, lprod
+			where prod_lgu=lprod_gu
+			order by prod_id) a)
+	where rnum between ${page}*${pageSize}-(${pageSize}-1) and ${page}*${pageSize}
+  </select>
+  
+   <select id="cntProdList" resultType="int">
+		  	select
+		   		 count(*)
+			from prod, lprod
+			where prod_lgu=lprod_gu
+  </select>
+  
+  <select id="selectProd" parameterType="String" resultType="prodVo">
+  			select
+		   		 prod_id
+		   		 ,prod_name
+		    	 ,lprod_nm
+		    	 ,buyer_name
+                 ,buyer_mail
+			from prod, lprod, buyer
+			where prod_lgu=lprod_gu and prod_buyer=buyer_id and prod_id=#{prod_id}
+			order by prod_id
+  </select>
   
 </mapper>
 

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import kr.or.ddit.user.model.PageVo;
+import kr.or.ddit.user.model.ProdVo;
 import kr.or.ddit.user.model.UserVo;
 
 public class UserDao implements UserDaoInf {
@@ -101,5 +102,25 @@ public class UserDao implements UserDaoInf {
 		session.commit();
 		session.close();
 		return chk;
+	}
+
+	@Override
+	public List<ProdVo> selectProdList(PageVo pageVo) {
+		SqlSessionFactory factory = Builder.getSqlSessionFactory();
+		SqlSession session = factory.openSession();
+		List<ProdVo> prodList = session.selectList("user.selectProdList", pageVo);
+		session.close();
+		return prodList;
+		
+		
+	}
+
+	@Override
+	public int cntProdList() {
+		SqlSessionFactory factory = Builder.getSqlSessionFactory();
+		SqlSession session = factory.openSession();
+		int totalCnt = session.selectOne("user.cntProdList");
+		session.close();
+		return totalCnt;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.user.model.PageVo;
+import kr.or.ddit.user.model.ProdVo;
 import kr.or.ddit.user.model.UserVo;
 
 
@@ -43,5 +44,9 @@ public interface UserServiceInf {
 	int deleteUser(String userId);
 
 	public int userUpdate(UserVo userVo);
+	
+	public List<ProdVo> selectProdList (PageVo pageVo);
+	
+	public int cntProdList ();
 	
 }

@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import kr.or.ddit.user.dao.Builder;
 import kr.or.ddit.user.dao.UserDao;
 import kr.or.ddit.user.model.PageVo;
+import kr.or.ddit.user.model.ProdVo;
 import kr.or.ddit.user.model.UserVo;
 
 public class UserService implements UserServiceInf {
@@ -102,6 +103,18 @@ public class UserService implements UserServiceInf {
 	public int userUpdate(UserVo userVo) {
 		// TODO Auto-generated method stub
 		return ud.userUpdate(userVo);
+	}
+
+	@Override
+	public List<ProdVo> selectProdList(PageVo pageVo) {
+		// TODO Auto-generated method stub
+		return ud.selectProdList(pageVo);
+	}
+
+	@Override
+	public int cntProdList() {
+		// TODO Auto-generated method stub
+		return ud.cntProdList();
 	}
 
 }
