@@ -3,6 +3,7 @@
     
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%
 String message = (String)session.getAttribute("session");
 if(message==null){
@@ -18,7 +19,13 @@ if(message==null){
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">JSP/SPRING<%=message %></a>
+			<a class="navbar-brand" href="#">JSP/SPRING 
+			<fmt:bundle basename="kr.or.ddit.resource.msg.msg">
+				<fmt:message key="visitor">
+					<fmt:param value="${session }"></fmt:param>
+				</fmt:message>
+			</fmt:bundle>
+			</a>
 			
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
