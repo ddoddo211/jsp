@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.encrypt.sha.KISA_SHA256;
 import kr.or.ddit.user.model.UserVo;
 import kr.or.ddit.user.service.UserService;
 
@@ -71,7 +72,9 @@ public class LoginServletSem extends HttpServlet{
 		
 		System.out.println(userId);
 		UserVo userVo = us.selectUser(userId);
-		if(userVo!=null && password.equals(userVo.getPass())){
+		String encryptPass = KISA_SHA256.encrypt(password);
+		if(userVo!=null && userVo.authPass(encryptPass)){
+//			if(userVo!=null && password.equals(userVo.getPass())){
 			//main.jsp 이동
 			
 			//redirect DB에 변화준다고 했을때 주로사용
