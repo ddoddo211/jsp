@@ -50,10 +50,10 @@
     <error-code>404</error-code>
     <location>/error/404/404.html</location>
   </error-page>
-  <error-page>
-    <error-code>500</error-code>
-    <location>/WEB-INF/error/500.html</location>
-  </error-page>
+<!--   <error-page> -->
+<!--     <error-code>500</error-code> -->
+<!--     <location>/WEB-INF/error/500.html</location> -->
+<!--   </error-page> -->
   <error-page>
     <exception-type>java.lang.ArithmeticException</exception-type>
     <location>/error/type/arithmetic.jsp</location>
@@ -72,10 +72,10 @@
 <!--     <filter-name>parameterFilter</filter-name> -->
 <!--     <url-pattern>/*</url-pattern> -->
 <!--   </filter-mapping> -->
-  <listener>
-    <listener-class>kr.or.ddit.listener.SessionListener</listener-class>
-  </listener>
-  <listener>
-    <listener-class>kr.or.ddit.listener.SessionAttrListener</listener-class>
-  </listener>
+<!--   <listener> -->
+<!--     <listener-class>kr.or.ddit.listener.SessionListener</listener-class> -->
+<!--   </listener> -->
+<!--   <listener> -->
+<!--     <listener-class>kr.or.ddit.listener.SessionAttrListener</listener-class> -->
+<!--   </listener> -->
 </web-app>
