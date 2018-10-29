@@ -33,7 +33,7 @@ public class LoginCheckFilter implements Filter {
 		//세션 없이 접속 가능한 요청(로그인 페이지, 로그인 요청)
 		if(uri.equals("/") || 
 		  uri.equals("/login/login.jsp") || 
-		  uri.equals("/dditLogin")||
+		  uri.equals("/loginSem")||
 		  uri.startsWith("/css") ||
 		  uri.startsWith("/js")){
 			

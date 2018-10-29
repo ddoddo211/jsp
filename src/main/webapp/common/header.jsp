@@ -4,12 +4,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%
-String message = (String)session.getAttribute("session");
-if(message==null){
-	message = "로그인정보없음";
-}
-%>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -22,7 +16,7 @@ if(message==null){
 			<a class="navbar-brand" href="#">JSP/SPRING 
 			<fmt:bundle basename="kr.or.ddit.resource.msg.msg">
 				<fmt:message key="visitor">
-					<fmt:param value="${session }"></fmt:param>
+					<fmt:param value="${S_USER.name }"></fmt:param>
 				</fmt:message>
 			</fmt:bundle>
 			</a>

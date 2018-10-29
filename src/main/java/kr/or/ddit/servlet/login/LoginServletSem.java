@@ -3,6 +3,7 @@ package kr.or.ddit.servlet.login;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.ddit.encrypt.sha.KISA_SHA256;
 import kr.or.ddit.user.model.UserVo;
 import kr.or.ddit.user.service.UserService;
+import kr.or.ddit.user.service.UserServiceInf;
 
 public class LoginServletSem extends HttpServlet{
 	private final String USERID = "brown";
@@ -25,84 +27,93 @@ public class LoginServletSem extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		//1. 사용자 ID, 비밀번호를 request 객체에서 받아온다
-		//2. db에서 조회에온 아이디, 비밀번호를 체크한다
-		//상수대신 db 조회 아이디 확인
-		// 1) 사용자가 전송한 ID 파라미터로 사용자 정보조회
-		// 2) db에서 조회한 사용자가 비밀번호가 파라미터로 전송된 비밀번호와 동인한지 비교
+//				Map<String, String[]> reqMap = req.getParameterMap();
+//				reqMap.put("newParameter", new String[]{"newValue"});
+				String newParameter = req.getParameter("newParameter");
+				System.out.println("newParameter : "+newParameter);
 		
-		//3. 일치할 경우main.jsp 로 이동
-		//3-2. 불일치할 경우 login.jsp 로 이동
-		
-		resp.setContentType("text/html; charset=utf-8");
-		PrintWriter pw =resp.getWriter();
-		
-		String userId= req.getParameter("userId");
-		String password = req.getParameter("password");
-		String rememberMe = req.getParameter("remember-me");
-
-		//아이디 기억
-		if(rememberMe == null){
-//			Cookie cookie = new Cookie("remember", "N");
-//			Cookie useridCookie = new Cookie("userId", userId);
-//			cookie.setMaxAge(60*60*24);
-//			cookie.setMaxAge(-1); //음수로 하면 쿠키가 유효화 되며 사라짐
-//			resp.addCookie(cookie);
-//			resp.addCookie(useridCookie);
-			
-			Cookie[] cookies = req.getCookies();
-			for(Cookie cookie : cookies){
-				if(cookie.getName().equals("userId")){
-					cookie.setMaxAge(0); // 0 : 바로삭제, -1 : 브라우저 재시작시 쿠키삭제 반영
-					resp.addCookie(cookie);
-				} else if(cookie.getName().equals("remember")){
-					cookie.setMaxAge(0);
-					resp.addCookie(cookie);
+				//1.사용자 아이디, 비밀번호를 reqeuest객체에서 받아온다
+				//2.db에서 조회해온 아이디, 비밀번호를 체크를 한다
+				//3-1.일치할 경우 main.jsp로 이동
+				//3-2.불일치 할경우 login.jsp로 이동
+						
+				//1
+				String userId = req.getParameter("userId");
+				String password = req.getParameter("password");
+				String rememberMe = req.getParameter("remember-me");
+				System.out.println("rememberMe : " + rememberMe);
+				//remember-me 파라미터 받아서 sysout으로 출력
+				
+				//rememberMe == null : 아이디 기억 사용 안함
+				if(rememberMe == null){
+					Cookie[] cookies = req.getCookies();
+					for(Cookie cookie : cookies){
+						//cookie 이름이 remember, userId 일경우 maxage를
+						//-1 설정하여 쿠키를 유효하지 않도록 설정
+						System.out.println(cookie.getName());
+						
+						if(cookie.getName().equals("remember") || 
+						   cookie.getName().equals("userId")){
+							
+							//-1 : 브라우저 재시작시 쿠키 삭제 반영
+							//0 : 바로 삭제
+							cookie.setMaxAge(-1);
+							resp.addCookie(cookie);
+						}
+					}
 				}
-				System.out.println(cookie.getName());
-			}
-		} else {
-			//response 객체에 저장
-			Cookie cookie = new Cookie("remember", "Y");
-			Cookie useridCookie = new Cookie("userId", userId);
-			resp.addCookie(cookie);
-			resp.addCookie(useridCookie);
-		}
-		
-		
-		System.out.println(userId);
-		UserVo userVo = us.selectUser(userId);
-		String encryptPass = KISA_SHA256.encrypt(password);
-		if(userVo!=null && userVo.authPass(encryptPass)){
-//			if(userVo!=null && password.equals(userVo.getPass())){
-			//main.jsp 이동
-			
-			//redirect DB에 변화준다고 했을때 주로사용
-//			resp.sendRedirect("main.jsp?userId="+userId+"&password="+password);
-			
-//			//session 에 사용자 정보 설정
-//			UserVo userVoTemp = new UserVo();
-//			userVoTemp.setUserId(userId);
-//			userVoTemp.setName("바루스");
-////			userVo.setAlias("원딜");
-//			userVoTemp.setBirth(new Date());
-			HttpSession session = req.getSession();
-//			session.setAttribute("session", userVo.getName()+"["+userVo.getAlias()+"] 님 안녕하세요");
-			session.setAttribute("session", "\t"+userVo.getName()+"["+userVo.getUserId()+"] 님 안녕하세요");
-			
-			//2. main.jsp
-			//body 영역에
-			//이름[별명] 님 안녕하세요
-			
-			//dispatch
-			RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
-			rd.forward(req, resp);
-			
-			
-		} else {
-			//login.jsp 이동
-			resp.sendRedirect("login/login.jsp");
-		}
+				//rememberMe != null : 아이디 기억 사용
+				else{
+					//response 객체에 쿠키를 저장
+					Cookie cookie = new Cookie("remember", "Y");
+					Cookie userIdCookie = new Cookie("userId", userId);
+					
+					resp.addCookie(cookie);
+					resp.addCookie(userIdCookie);
+				}
+				
+				//2 --> db대신 상수로 대체 --> db로 대체
+				//UserService 객체를 생성
+				UserServiceInf userService = new UserService();
+				
+				//	1.사용자가 전송한 userId 파라미터로 사용자 정보조회
+				UserVo userVo = userService.selectUser(userId);
+				
+				//	2.db에서 조회한 사용자 비밀번호가 파라미터로 전송된 비밀번호와 동일한지 비교
+				//	3.session에 사용자 정보등록(as-is : 임의의 userVo 등록
+				//						  to-be : db에서 조회한 userVo)
+				// pom.xml 에서 oracle dependecy scope 삭제
+				
+				//3-1 : main.jsp로 이동
+				//if(userVo != null && userVo.getPass().equals(password)){
+				
+				String encryptPass = KISA_SHA256.encrypt(password);
+				if(userVo != null && userVo.authPass(encryptPass)){
+					//redirect
+					//resp.sendRedirect("main.jsp?userId="+userId + "&password="+password);
+					
+					//1.session에 사용자 정보 설정
+					
+					req.getSession().setAttribute("S_USER", userVo);
+					
+					//HttpSession session = req.getSession();
+					//session.invalidate();
+					
+					//2.main.jsp 
+					//body 영역에
+					// 이름[별명] 님 안녕하세요
+					
+					
+					
+					
+					//dispatch
+					RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
+					rd.forward(req, resp);
+				}
+				//3-2 : login.jsp로 이동
+				else{
+					resp.sendRedirect("login/login.jsp");
+				}
 		
 		
 	}
